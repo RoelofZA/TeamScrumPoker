@@ -1,0 +1,42 @@
+<div class="appbox">
+  <div class="col-12 col-md-12 col-sm-12 Row">
+    <label for="labelRound">Team: </label>&nbsp;<label for="labelRound">{{pokerGame.teamName}}</label><br/>
+    <label for="labelRound">Your Score: </label>&nbsp;<label for="labelRound">{{pokerGame.score}}</label><br/>
+    <!-- <label for="labelRound">Team Score: </label>&nbsp;<label for="labelRound">{{totalScore}}</label> -->
+  </div>
+
+  <div class="col-12 col-md-12 col-sm-12 Row">
+    <label>Team:</label>
+  </div>
+  <div class="col-12 col-md-12 col-sm-12 Row">
+    <input [(ngModel)]="pokerGame.teamName" placeholder="teamName" required>
+  </div>
+
+  <div class="col-12 col-md-12 col-sm-12 Row">
+    <button (click)="onClick(1)" class="vote">1</button>
+    <button (click)="onClick(2)" class="vote">2</button>
+    <button (click)="onClick(3)" class="vote">3</button>
+  </div>
+
+  <div class="col-12 col-md-12 col-sm-12 Row">
+    <button (click)="onClick(5)" class="vote">5</button>
+    <button (click)="onClick(8)" class="vote">8</button>
+    <button (click)="onClick(13)" class="vote">13</button>
+  </div>
+
+  <div class="col-12 col-md-12 col-sm-12 Row">
+    <button (click)="onClick(21)" class="vote">21</button>
+    <button (click)="onClick(34)" class="vote">34</button>
+    <button (click)="onClick(55)" class="vote">55</button>
+  </div>
+</div>
+
+<!-- <ul>
+  <li class="text" *ngFor="let item of items | async">
+    {{item.name}} {{item.vote}}
+  </li>
+</ul> -->
+
+<div class="col-12 col-md-6 col-sm-12 Row" style="text-align: center; width: 240px;">
+  <button (click)="onClickReset()" class="appbtn">Reset Round</button>
+</div>

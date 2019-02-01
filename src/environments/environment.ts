@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+    firebase: {
+        apiKey: "AIzaSyDvYHwZCySQGHkWyozVKq7HpZz8pE_6PjU",
+        authDomain: "hubmobile-a54a9.firebaseapp.com",
+        databaseURL: "https://hubmobile-a54a9.firebaseio.com/",
+        projectId: "hubmobile-a54a9",
+        storageBucket: "hubmobile-a54a9.appspot.com",
+        messagingSenderId: "304906048704",
+    }
 };
 
 /*
