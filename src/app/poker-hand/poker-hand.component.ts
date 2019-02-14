@@ -25,17 +25,6 @@ export class PokerHandComponent implements OnInit {
 
   constructor(private pokerServiceService: PokerServiceService,db: AngularFireDatabase,cookieService: CookieService ) {
     this.cookieService = cookieService;
-  //   db.list("scrumpokerv2/teams/" + this.pokerGame.teamName.toLowerCase() + "/users").valueChanges().subscribe(scores => {
-  //     this.totalScore = 0;
-  //     for (const key in scores) {
-  //       if (scores.hasOwnProperty(key)) {
-  //         var pv1: PokerVote = scores[key] as PokerVote;
-  //         console.log(pv1.vote);
-  //         this.totalScore+=pv1.vote;
-  //       }
-  //     }
-  //     this.totalScore = this.totalScore / scores.length;
-  // });
     this.dbOne = db;
    }
 
@@ -62,7 +51,6 @@ export class PokerHandComponent implements OnInit {
   onClick(score: number){
     this.pokerServiceService.addScore(this.pokerGame.playerGUID, score);
     this.pokerGame.score = score;
-    //this.pokerServiceService.getScore().subscribe(score => this.pokerGame.score = score);
     this.dbOne.list("scrumpokerv2/teams/" + this.pokerGame.teamName.toLowerCase() + "/users").update(this.pokerGame.playerGUID,
       { name:this.pokerGame.playerGUID, vote:score }
     );
