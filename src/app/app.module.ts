@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
 import { ScoreBoardComponent } from './score-board/score-board.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { AppRoutingModule } from './app-routing.module';
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireDatabaseModule, AppRoutingModule
   ],
-  providers: [],
+  providers: [CookieService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

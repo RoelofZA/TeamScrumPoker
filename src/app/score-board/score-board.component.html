@@ -1,4 +1,17 @@
 <div class="col-12 col-md-12 col-sm-12 Row">
+  <label>Team:</label>
+</div>
+<div class="col-12 col-md-12 col-sm-12 Row">
+  <input [(ngModel)]="teamName" placeholder="Team name" (change)="OnClickTeam()" required/>
+</div>
+<div class="col-12 col-md-12 col-sm-12 Row">
+  <label>Members:</label>
+</div>
+<div class="col-12 col-md-12 col-sm-12 Row">
+  <input [(ngModel)]="members" placeholder="Members" type="number" required/>
+</div>
+
+<div class="col-12 col-md-12 col-sm-12 Row" *ngIf="members <= votes">
   
   <label for="labelRound">Combined Score: </label>&nbsp;&nbsp;<label for="labelRound">{{avgScore | number:'1.1-2'}}</label><br/>
 

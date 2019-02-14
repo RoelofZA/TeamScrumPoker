@@ -4,6 +4,7 @@ import { PokerServiceService } from "../poker-service.service";
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 import { PokerVote } from '../poker-vote';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-poker-hand',
@@ -19,37 +20,50 @@ export class PokerHandComponent implements OnInit {
     teamName: 'phoenix',
     playerGUID: ''
   }
+  cookieValue = 'UNKNOWN';
+  cookieService:CookieService;
 
-  constructor(private pokerServiceService: PokerServiceService,db: AngularFireDatabase ) {
-    db.list("scrumpokerv2/teams/" + this.pokerGame.teamName + "/users").valueChanges().subscribe(scores => {
-      this.totalScore = 0;
-      for (const key in scores) {
-        if (scores.hasOwnProperty(key)) {
-          var pv1: PokerVote = scores[key] as PokerVote;
-          console.log(pv1.vote);
-          this.totalScore+=pv1.vote;
-        }
-      }
-      this.totalScore = this.totalScore / scores.length;
-  });
+  constructor(private pokerServiceService: PokerServiceService,db: AngularFireDatabase,cookieService: CookieService ) {
+    this.cookieService = cookieService;
+  //   db.list("scrumpokerv2/teams/" + this.pokerGame.teamName.toLowerCase() + "/users").valueChanges().subscribe(scores => {
+  //     this.totalScore = 0;
+  //     for (const key in scores) {
+  //       if (scores.hasOwnProperty(key)) {
+  //         var pv1: PokerVote = scores[key] as PokerVote;
+  //         console.log(pv1.vote);
+  //         this.totalScore+=pv1.vote;
+  //       }
+  //     }
+  //     this.totalScore = this.totalScore / scores.length;
+  // });
     this.dbOne = db;
    }
 
   ngOnInit() {
-    this.pokerGame.playerGUID = this.guid();
+    this.cookieValue = this.cookieService.get('PlayerGuid');
+    if (this.cookieValue===''){
+      this.pokerGame.playerGUID = this.guid();
+      this.cookieService.set( 'PlayerGuid', this.pokerGame.playerGUID );
+    }
+    else
+    {
+      this.pokerGame.playerGUID = this.cookieValue;
+    }
+
     this.pokerServiceService.addScore(this.pokerGame.playerGUID, 0);
   }
   
   onClickReset(){
-    this.dbOne.list("scrumpokerv2/teams/" + this.pokerGame.teamName).set("users", {}
+    this.dbOne.list("scrumpokerv2/teams/" + this.pokerGame.teamName.toLowerCase()).set("users", {}
     );
     this.pokerGame.score = 0;
   }
 
   onClick(score: number){
     this.pokerServiceService.addScore(this.pokerGame.playerGUID, score);
-    this.pokerServiceService.getScore().subscribe(score => this.pokerGame.score = score);
-    this.dbOne.list("scrumpokerv2/teams/" + this.pokerGame.teamName + "/users").update(this.pokerGame.playerGUID,
+    this.pokerGame.score = score;
+    //this.pokerServiceService.getScore().subscribe(score => this.pokerGame.score = score);
+    this.dbOne.list("scrumpokerv2/teams/" + this.pokerGame.teamName.toLowerCase() + "/users").update(this.pokerGame.playerGUID,
       { name:this.pokerGame.playerGUID, vote:score }
     );
   }

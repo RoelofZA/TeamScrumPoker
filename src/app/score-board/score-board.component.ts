@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { PokerVote } from '../poker-vote';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-score-board',
@@ -11,13 +12,33 @@ export class ScoreBoardComponent implements OnInit {
   avgScore: number = 0;
   Scores: number[] = [0,0,0,0,0,0,0,0,0,0];
   ScoresStr: string;
+  members: number = 5;
+  teamName: string = 'phoenix';
+  votes: number;
+  db: AngularFireDatabase;
+  oldSub:Subscription;
 
   constructor(db: AngularFireDatabase ) {
-    db.list("scrumpokerv2/teams/phoenix/users").valueChanges().subscribe(scores => {
+    this.db = db;
+    
+  }
+
+  ngOnInit() {
+    this.OnClickTeam();
+  }
+
+  OnClickTeam(){
+    if (this.oldSub != undefined){
+      this.oldSub.unsubscribe();
+    }
+
+    this.oldSub = this.db.list("scrumpokerv2/teams/" + this.teamName.toLowerCase() + "/users").valueChanges().subscribe(scores => {
       this.avgScore = 0;
       this.Scores = [0,0,0,0,0,0,0,0,0,0];
       this.ScoresStr = '';
       
+      this.votes = scores.length;
+
       for (const key in scores) {
         if (scores.hasOwnProperty(key)) {
           var pv1: PokerVote = scores[key] as PokerVote;
@@ -68,9 +89,6 @@ export class ScoreBoardComponent implements OnInit {
 
       this.ScoresStr = str;
     });
-  }
-
-  ngOnInit() {
   }
 
 }

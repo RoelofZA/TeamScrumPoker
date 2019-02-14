@@ -17,7 +17,7 @@ label {
     max-width: 220px;
     max-height: 400px;
     min-width: 200px;
-    background-color: #d20117;
+    background-color: #0069C8;
     margin: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -29,13 +29,14 @@ button {
     border-radius: 10px;
     padding: 5px;
     color: white;
-    background-color: #F5C245;
+    background-color: #FF4F00;
 }
 
 .appbtn {
-    background-color: #55B36D;
+    background-color: #FF4F00;
+    color: white;
 }
 
 label {
-    color: #FFFFFF;
+    color: #FFC200;
 }
